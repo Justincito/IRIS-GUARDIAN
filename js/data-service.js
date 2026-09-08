@@ -2,34 +2,49 @@
  * js/data-service.js
  * ==================
  *
- * Fuente de datos de IRIS Guardian.
+ * Fuente oficial de datos de IRIS Guardian.
  *
- * Flujo actual:
+ * Flujo:
  *
- *     IRIS STUDIO
- *          ↓
- *     GitHub Repository
- *          ↓
- *     GitHub Pages
- *          ↓
- *     public/data/iris-state.json
- *          ↓
- *     IRIS GUARDIAN
- *
- * El servicio NO contiene lógica visual.
+ * IRIS STUDIO
+ *     ↓
+ * public/data/iris-state.json
+ *     ↓
+ * GitHub
+ *     ↓
+ * GitHub Pages
+ *     ↓
+ * IRIS Guardian
  */
+
+const CONFIG = {
+    mode: 'remote-json',
+
+    endpoint: './public/data/iris-state.json',
+
+    /*
+     * Durante pruebas:
+     * consultar cada 5 segundos.
+     */
+    pollMs: 5000
+};
+
+
+/* ============================================================
+   ESTADO MOCK
+   ============================================================ */
 
 const DEMO_STATE = {
     schema_version: 1,
 
-    generated_at: new Date().toISOString(),
+    generated_at: Date.now() / 1000,
 
     device: {
         id: 'IRIS-HORIZON-001',
         name: 'IRIS Horizon 001',
         status: 'online',
         ip: '192.168.0.100',
-        last_update: new Date().toISOString()
+        last_update: Date.now() / 1000
     },
 
     communication: {
@@ -38,26 +53,26 @@ const DEMO_STATE = {
 
     camera: {
         status: 'active',
-        fps: 29.8
+        fps: 12.5
     },
 
     ai: {
         status: 'active',
-        timestamp: new Date().toISOString(),
+        timestamp: Date.now() / 1000,
 
         frame: {
             width: 640,
             height: 480
         },
 
-        detection_count: 3,
+        detection_count: 1,
 
         primary: {
             label: 'person',
             display_label: 'persona',
             confidence: 0.92,
             zone: 'center',
-            score: 0.88,
+            score: 0.92,
             substate: null
         },
 
@@ -67,61 +82,45 @@ const DEMO_STATE = {
                 display_label: 'persona',
                 confidence: 0.92,
                 zone: 'center',
-                score: 0.88,
+                score: 0.92,
                 substate: null
-            },
-            {
-                label: 'chair',
-                display_label: 'silla',
-                confidence: 0.84,
-                zone: 'left',
-                score: 0.55,
-                substate: null
-            },
-            {
-                label: 'traffic light',
-                display_label: 'semáforo',
-                confidence: 0.81,
-                zone: 'right',
-                score: 0.77,
-                substate: 'rojo'
             }
         ],
 
-        voice_text: 'persona al frente, cerca.'
+        voice_text: ''
     },
 
     sensors: {
         status: 'active',
 
         left: {
-            distance_mm: 720,
-            distance_m: 0.72,
-            status: 'clear',
+            distance_mm: 480,
+            distance_m: 0.48,
+            status: 'warning',
             confirmed: true
         },
 
         right: {
-            distance_mm: 480,
-            distance_m: 0.48,
-            status: 'warning',
+            distance_mm: 720,
+            distance_m: 0.72,
+            status: 'clear',
             confirmed: true
         }
     },
 
     haptic: {
         status: 'active',
-        left: 21,
-        center: 0,
-        right: 43
+        left: 70,
+        center: 24,
+        right: 0
     },
 
     battery: {
         available: true,
         mode: 'demo_timer',
-        percent: 82,
-        remaining_seconds: 14760,
-        remaining_text: '4 h 06 min',
+        percent: 99,
+        remaining_seconds: 17870,
+        remaining_text: '4 h 57 min',
         voltage: null,
         current: null,
         status: 'high',
@@ -143,7 +142,7 @@ const DEMO_STATE = {
     activity: [
         {
             type: 'detection',
-            timestamp: new Date().toISOString(),
+            timestamp: Date.now() / 1000,
             title: 'Persona detectada',
             detail: 'al frente',
             confidence: 0.92
@@ -155,73 +154,45 @@ const DEMO_STATE = {
 
 
 /* ============================================================
-   CONFIGURACIÓN
-   ============================================================ */
-
-const CONFIG = {
-
-    /*
-     * remote-json = datos reales desde GitHub Pages
-     * mock        = datos ficticios locales
-     */
-    mode: 'remote-json',
-
-    /*
-     * IMPORTANTE:
-     * Esta ruta es relativa a index.html.
-     */
-    endpoint: './public/data/iris-state.json',
-
-    /*
-     * Durante pruebas usamos 5 segundos.
-     * Después podremos devolverlo a un valor mayor.
-     */
-    pollMs: 5000
-};
-
-
-/* ============================================================
    FETCH
    ============================================================ */
 
 async function fetchJson(url) {
 
-    const cacheBuster = `?t=${Date.now()}`;
+    const cacheBuster =
+        `?t=${Date.now()}`;
 
-    const response = await fetch(
-        `${url}${cacheBuster}`,
-        {
-            method: 'GET',
 
-            cache: 'no-store',
+    const finalUrl =
+        `${url}${cacheBuster}`;
 
-            headers: {
-                'Accept': 'application/json'
-            }
-        }
+
+    console.log(
+        '[GUARDIAN] GET:',
+        finalUrl
     );
+
+
+    const response =
+        await fetch(
+            finalUrl,
+            {
+                method: 'GET',
+
+                cache: 'no-store',
+
+                headers: {
+                    'Accept':
+                        'application/json'
+                }
+            }
+        );
 
 
     if (!response.ok) {
 
         throw new Error(
             `Guardian state HTTP ${response.status}`
-        );
-    }
-
-
-    const contentType =
-        response.headers.get('content-type') || '';
-
-
-    if (
-        !contentType.includes('application/json') &&
-        !contentType.includes('text/json')
-    ) {
-
-        console.warn(
-            '[GUARDIAN] Respuesta inesperada:',
-            contentType
         );
     }
 
@@ -236,170 +207,80 @@ async function fetchJson(url) {
 
 function normalize(raw) {
 
-    const s = structuredClone(raw || {});
+    const state =
+        raw && typeof raw === 'object'
+            ? raw
+            : {};
 
 
-    /* --------------------------------------------------------
-       Estructuras base
-       -------------------------------------------------------- */
+    state.device ??= {};
+    state.communication ??= {};
+    state.camera ??= {};
+    state.ai ??= {};
+    state.sensors ??= {};
+    state.haptic ??= {};
+    state.battery ??= {};
+    state.gps ??= {};
 
-    s.schema_version ??= 1;
 
-    s.device ??= {};
-    s.communication ??= {};
-    s.camera ??= {};
-    s.ai ??= {};
-    s.sensors ??= {};
-    s.haptic ??= {};
-    s.battery ??= {};
-    s.gps ??= {};
-
-    s.activity =
-        Array.isArray(s.activity)
-            ? s.activity
-            : [];
-
-    s.alerts =
-        Array.isArray(s.alerts)
-            ? s.alerts
-            : [];
-
-    s.ai.detections =
-        Array.isArray(s.ai.detections)
-            ? s.ai.detections
+    state.ai.detections =
+        Array.isArray(
+            state.ai.detections
+        )
+            ? state.ai.detections
             : [];
 
 
-    /* --------------------------------------------------------
-       Identidad
-       -------------------------------------------------------- */
+    state.activity =
+        Array.isArray(
+            state.activity
+        )
+            ? state.activity
+            : [];
 
-    s.device.id ??=
+
+    state.alerts =
+        Array.isArray(
+            state.alerts
+        )
+            ? state.alerts
+            : [];
+
+
+    state.device.id ??=
         'IRIS-HORIZON-001';
 
-    s.device.name ??=
+
+    state.device.name ??=
         'IRIS Horizon 001';
 
-    s.device.status ??=
+
+    state.device.status ??=
         'unknown';
 
 
-    /* --------------------------------------------------------
-       Batería
-       -------------------------------------------------------- */
-
-    if (s.battery.percent != null) {
-
-        const percent =
-            Number(s.battery.percent);
+    state.camera.status ??=
+        'unknown';
 
 
-        s.battery.percent =
-            Number.isFinite(percent)
-                ? Math.max(
-                    0,
-                    Math.min(100, percent)
-                )
-                : null;
-
-    } else {
-
-        s.battery.percent = null;
-    }
+    state.ai.status ??=
+        'unknown';
 
 
-    /* --------------------------------------------------------
-       GPS
-       -------------------------------------------------------- */
-
-    s.gps.available =
-        s.gps.available === true;
+    state.sensors.status ??=
+        'unknown';
 
 
-    /* --------------------------------------------------------
-       Estado semántico del sistema
-       -------------------------------------------------------- */
-
-    s.system = {
-
-        os: 'ok',
-
-        camera:
-            s.camera.status === 'active'
-                ? 'ok'
-                : 'error',
-
-        ai:
-            s.ai.status === 'active'
-                ? 'ok'
-                : 'error',
-
-        sensors:
-            s.sensors.status === 'active'
-                ? 'ok'
-                : 'error',
-
-        haptic:
-            s.haptic.status === 'active'
-                ? 'ok'
-                : 'offline',
-
-        communication:
-            s.communication.status === 'stable'
-                ? 'ok'
-                : 'offline'
-    };
+    state.haptic.status ??=
+        'idle';
 
 
-    /* --------------------------------------------------------
-       Detecciones
-       -------------------------------------------------------- */
-
-    const stateTimestamp =
-        s.ai.timestamp ||
-        s.generated_at ||
-        null;
-
-
-    s.detections =
-        s.ai.detections.map(
-            (item, index) => ({
-
-                id:
-                    item.id ||
-                    `d-${index}`,
-
-                label:
-                    item.display_label ||
-                    item.label ||
-                    'Objeto',
-
-                confidence:
-                    Number(
-                        item.confidence || 0
-                    ),
-
-                zone:
-                    item.zone ||
-                    'unknown',
-
-                substate:
-                    item.substate ||
-                    null,
-
-                timestamp:
-                    item.timestamp ||
-                    stateTimestamp
-            })
-        );
-
-
-    return s;
+    return state;
 }
 
 
 /* ============================================================
-   DATA SOURCE
+   API PÚBLICA
    ============================================================ */
 
 export const GuardianDataSource = {
@@ -410,13 +291,11 @@ export const GuardianDataSource = {
     },
 
 
-    configure(
-        {
-            mode = CONFIG.mode,
-            endpoint = CONFIG.endpoint,
-            pollMs = CONFIG.pollMs
-        } = {}
-    ) {
+    configure({
+        mode = CONFIG.mode,
+        endpoint = CONFIG.endpoint,
+        pollMs = CONFIG.pollMs
+    } = {}) {
 
         CONFIG.mode =
             mode;
@@ -431,23 +310,38 @@ export const GuardianDataSource = {
 
     async getState() {
 
+        console.log(
+            '[GUARDIAN] Solicitando estado...'
+        );
+
+
         if (
             CONFIG.mode === 'mock'
         ) {
 
             return normalize(
-                DEMO_STATE
+                structuredClone(
+                    DEMO_STATE
+                )
             );
         }
 
 
-        const raw =
+        const state =
             await fetchJson(
                 CONFIG.endpoint
             );
 
 
-        return normalize(raw);
+        console.log(
+            '[GUARDIAN] JSON recibido:',
+            state
+        );
+
+
+        return normalize(
+            state
+        );
     },
 
 
