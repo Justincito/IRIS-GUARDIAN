@@ -1,23 +1,23 @@
 {
   "schema_version": 1,
-  "generated_at": 1788886993.1877346,
+  "generated_at": 1788887003.6298828,
   "device": {
     "id": "IRIS-HORIZON-001",
     "name": "IRIS Horizon 001",
     "status": "online",
     "ip": "192.168.88.232",
-    "last_update": 1788886993.1877346
+    "last_update": 1788887003.6298828
   },
   "communication": {
     "status": "stable"
   },
   "camera": {
     "status": "active",
-    "fps": 10.0
+    "fps": 5.730659025835117
   },
   "ai": {
     "status": "active",
-    "timestamp": 1788886993.0187175,
+    "timestamp": 1788887003.190441,
     "frame": {
       "width": 640,
       "height": 480
@@ -52,7 +52,7 @@
     "available": true,
     "mode": "demo_timer",
     "percent": 99,
-    "remaining_seconds": 17809,
+    "remaining_seconds": 17798,
     "remaining_text": "4 h 56 min",
     "voltage": null,
     "current": null,
