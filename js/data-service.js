@@ -341,6 +341,7 @@ export const GuardianDataSource = {
 
         return normalize(
             state
+            
         );
     },
 
