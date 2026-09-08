@@ -1212,6 +1212,7 @@ function initGuardian() {
    DOM READY
    ============================================================ */
 
+
 if (
     document.readyState === 'loading'
 ) {
