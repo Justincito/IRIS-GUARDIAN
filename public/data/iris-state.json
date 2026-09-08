@@ -1,39 +1,75 @@
 {
   "schema_version": 1,
-  "generated_at": 1788887108.8787968,
+  "generated_at": 1788887118.9593456,
   "device": {
     "id": "IRIS-HORIZON-001",
     "name": "IRIS Horizon 001",
     "status": "online",
     "ip": "192.168.88.232",
-    "last_update": 1788887108.8787968
+    "last_update": 1788887118.9593456
   },
   "communication": {
     "status": "stable"
   },
   "camera": {
     "status": "active",
-    "fps": 8.720930232503049
+    "fps": 10.50620821403105
   },
   "ai": {
     "status": "active",
-    "timestamp": 1788887108.780814,
+    "timestamp": 1788887118.9141216,
     "frame": {
       "width": 640,
       "height": 480
     },
-    "detection_count": 0,
-    "primary": null,
-    "detections": [],
-    "voice_text": "No se detectan obstáculos relevantes."
+    "detection_count": 1,
+    "primary": {
+      "label": "person",
+      "display_label": "persona",
+      "confidence": 0.6421865224838257,
+      "zone": "left",
+      "score": 0.7373432612419129,
+      "substate": null,
+      "box": {
+        "x1": 0,
+        "y1": 63,
+        "x2": 381,
+        "y2": 479
+      },
+      "center": {
+        "x": 190,
+        "y": 271
+      }
+    },
+    "detections": [
+      {
+        "label": "person",
+        "display_label": "persona",
+        "confidence": 0.6421865224838257,
+        "zone": "left",
+        "score": 0.7373432612419129,
+        "substate": null,
+        "box": {
+          "x1": 0,
+          "y1": 63,
+          "x2": 381,
+          "y2": 479
+        },
+        "center": {
+          "x": 190,
+          "y": 271
+        }
+      }
+    ],
+    "voice_text": "persona a la izquierda, a distancia."
   },
   "sensors": {
     "status": "active",
     "left": {
-      "distance_mm": null,
-      "distance_m": null,
-      "status": "no_data",
-      "confirmed": false
+      "distance_mm": 247.9335765838623,
+      "distance_m": 0.248,
+      "status": "danger",
+      "confirmed": true
     },
     "right": {
       "distance_mm": null,
@@ -43,16 +79,16 @@
     }
   },
   "haptic": {
-    "status": "idle",
-    "left": 0,
-    "center": 0,
+    "status": "active",
+    "left": 87,
+    "center": 30,
     "right": 0
   },
   "battery": {
     "available": true,
     "mode": "demo_timer",
     "percent": 98,
-    "remaining_seconds": 17693,
+    "remaining_seconds": 17683,
     "remaining_text": "4 h 54 min",
     "voltage": null,
     "current": null,
@@ -71,6 +107,20 @@
     "status": "unavailable"
   },
   "activity": [
+    {
+      "type": "proximity",
+      "timestamp": 1788887118.9593456,
+      "title": "Obstáculo muy cercano",
+      "detail": "a la izquierda",
+      "distance_mm": 247.9335765838623
+    },
+    {
+      "type": "detection",
+      "timestamp": 1788887118.9593456,
+      "title": "Persona detectado",
+      "detail": "a la izquierda",
+      "confidence": 0.6421865224838257
+    },
     {
       "type": "proximity",
       "timestamp": 1788886938.9921541,
@@ -114,5 +164,12 @@
       "distance_mm": 264.6779916314313
     }
   ],
-  "alerts": []
+  "alerts": [
+    {
+      "type": "proximity",
+      "severity": "critical",
+      "title": "Obstáculo muy cercano",
+      "message": "Obstáculo a la izquierda a 248 mm."
+    }
+  ]
 }
