@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>IRIS Guardian | Monitoreo</title>
+
+
+    <!-- =====================================================
+         CSS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/styles.css"
+    >
+
+
+    <!-- =====================================================
+         FUENTES
+         ===================================================== -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         ICONOS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+
+    <!-- =====================================================
+         IMPORT MAP DE THREE.JS
+         ===================================================== -->
+
+    <!--
+        Se conserva porque forma parte de tu proyecto.
+        El nuevo visor no depende directamente de Three.js.
+    -->
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+
+    <!-- =====================================================
+         MODEL VIEWER
+         ===================================================== -->
+
+    <script
+        type="module"
+        src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js">
+    </script>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header class="glass-header">
+
+        <div class="header-content">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+
+                <h1 class="brand-text">
+                    IRIS <span>Guardian</span>
+                </h1>
+
+            </div>
+
+
+            <button
+                id="theme-toggle"
+                class="btn-icon"
+                aria-label="Cambiar tema"
+            >
+
+                <i class="fa-solid fa-moon"></i>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+         ===================================================== -->
+
+    <main class="feed-container">
+
+
+        <!-- =================================================
+             TARJETA DE ESTADO
+             ================================================= -->
+
+        <section class="card connection-card">
+
+            <div class="connection-header">
+
+                <div class="status-indicator">
+
+                    <span class="dot skeleton-pulse"></span>
+
+                    <span id="sys-status">
+                        Esperando conexión...
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="last-sync"
+                    id="last-sync"
+                >
+                    --:--
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TARJETA DEL VISOR 3D
+             ================================================= -->
+
+        <section class="card viewer-card">
+
+
+            <!-- HEADER DEL VISOR -->
+
+            <div class="card-header">
+
+                <h2>
+                    <i class="fa-solid fa-vr-cardboard"></i>
+                    Dispositivo
+                </h2>
+
+
+                <span class="badge info">
+                    3D Interactivo
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 CONTENEDOR DEL VISOR
+                 ================================================= -->
+
+            <div
+                class="viewer-container"
+                id="canvas-container"
+            >
+
+
+                <!-- =================================================
+                     VISOR 3D IRIS
+
+                     IMPORTANTE:
+                     NO poner comentarios HTML dentro
+                     de esta etiqueta.
+                     ================================================= -->
+
+                <model-viewer
+                    id="iris-viewer"
+                    src="./public/models/iris-horizon.glb"
+                    alt="Gafas IRIS"
+                    camera-controls
+                    disable-pan
+                    touch-action="pan-y"
+                    interaction-prompt="none"
+                    auto-rotate
+                    auto-rotate-delay="0"
+                    rotation-per-second="3deg"
+                    camera-target="auto auto auto"
+                    camera-orbit="0deg 82deg 68%"
+                    field-of-view="25deg"
+                    min-field-of-view="18deg"
+                    max-field-of-view="45deg"
+                    exposure="1.2"
+                    environment-image="neutral"
+                    shadow-intensity="0.85"
+                    shadow-softness="0.8"
+                    tone-mapping="commerce"
+                    loading="eager"
+                    reveal="auto">
+                </model-viewer>
+
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="viewer-footer">
+
+                Visualización en tiempo real
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TARJETA DE MÉTRICAS
+             ================================================= -->
+
+        <section class="card metrics-card">
+
+            <div class="metrics-grid">
+
+
+                <div class="metric">
+
+                    <i class="fa-solid fa-battery-half metric-icon"></i>
+
+                    <div class="metric-data">
+
+                        <span class="metric-label">
+                            Batería
+                        </span>
+
+                        <div
+                            class="skeleton skeleton-text"
+                            id="bat-val">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                    <i class="fa-solid fa-microchip metric-icon"></i>
+
+                    <div class="metric-data">
+
+                        <span class="metric-label">
+                            Sistema
+                        </span>
+
+                        <div
+                            class="skeleton skeleton-text"
+                            id="sys-val">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                    <i class="fa-solid fa-camera metric-icon"></i>
+
+                    <div class="metric-data">
+
+                        <span class="metric-label">
+                            Cámara
+                        </span>
+
+                        <div
+                            class="skeleton skeleton-text"
+                            id="cam-val">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                    <i class="fa-solid fa-brain metric-icon"></i>
+
+                    <div class="metric-data">
+
+                        <span class="metric-label">
+                            IA Vision
+                        </span>
+
+                        <div
+                            class="skeleton skeleton-text"
+                            id="ia-val">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DETECCIONES
+             ================================================= -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    <i class="fa-solid fa-expand"></i>
+                    Detecciones Recientes
+                </h2>
+
+                <div class="skeleton skeleton-badge"></div>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <ul
+                    class="list-container"
+                    id="detections-list"
+                >
+
+                    <li class="list-item">
+                        <div class="skeleton skeleton-line"></div>
+                    </li>
+
+                    <li class="list-item">
+                        <div class="skeleton skeleton-line w-80"></div>
+                    </li>
+
+                    <li class="list-item">
+                        <div class="skeleton skeleton-line w-60"></div>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             GPS
+             ================================================= -->
+
+        <section class="card map-card">
+
+            <div class="card-header">
+
+                <h2>
+                    <i class="fa-solid fa-location-dot"></i>
+                    Ubicación (GPS)
+                </h2>
+
+            </div>
+
+
+            <div class="map-placeholder">
+
+                <div class="map-message">
+
+                    <i class="fa-solid fa-satellite-dish pulse-icon"></i>
+
+                    <p>
+                        Esperando coordenadas GPS...
+                    </p>
+
+
+                    <div class="coords">
+
+                        <span
+                            class="skeleton skeleton-text w-50">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             HISTORIAL
+             ================================================= -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    Historial de Eventos
+                </h2>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div
+                    class="timeline"
+                    id="timeline-list"
+                >
+
+                    <div class="timeline-item">
+
+                        <div class="skeleton skeleton-line w-80"></div>
+
+                    </div>
+
+
+                    <div class="timeline-item">
+
+                        <div class="skeleton skeleton-line w-60"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT DE LA INTERFAZ
+         ===================================================== -->
+
+    <script
+        type="module"
+        src="js/app.js">
+    </script>
+
+
+    <!-- =====================================================
+         JAVASCRIPT DEL VISOR 3D
+         ===================================================== -->
+
+    <script
+        type="module"
+        src="js/viewer3d.js">
+    </script>
+
+
+</body>
+
+</html>
