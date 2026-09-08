@@ -1,23 +1,23 @@
 {
   "schema_version": 1,
-  "generated_at": 1788884106.7971585,
+  "generated_at": 1788884119.1334057,
   "device": {
     "id": "IRIS-HORIZON-001",
     "name": "IRIS Horizon 001",
     "status": "online",
     "ip": "192.168.88.232",
-    "last_update": 1788884106.7971585
+    "last_update": 1788884119.1334057
   },
   "communication": {
     "status": "stable"
   },
   "camera": {
     "status": "active",
-    "fps": 10.204081632571516
+    "fps": 7.5821398483229965
   },
   "ai": {
     "status": "active",
-    "timestamp": 1788884106.6586893,
+    "timestamp": 1788884119.0043976,
     "frame": {
       "width": 640,
       "height": 480
@@ -26,69 +26,69 @@
     "primary": {
       "label": "person",
       "display_label": "persona",
-      "confidence": 0.8106865286827087,
+      "confidence": 0.5764382481575012,
       "zone": "left",
-      "score": 0.8212182643413544,
+      "score": 0.5904808428287506,
       "substate": null,
       "box": {
-        "x1": 2,
-        "y1": 98,
-        "x2": 377,
-        "y2": 479
+        "x1": 0,
+        "y1": 93,
+        "x2": 108,
+        "y2": 476
       },
       "center": {
-        "x": 189,
-        "y": 288
+        "x": 54,
+        "y": 284
       }
     },
     "detections": [
       {
         "label": "person",
         "display_label": "persona",
-        "confidence": 0.8106865286827087,
+        "confidence": 0.5764382481575012,
         "zone": "left",
-        "score": 0.8212182643413544,
+        "score": 0.5904808428287506,
         "substate": null,
         "box": {
-          "x1": 2,
-          "y1": 98,
-          "x2": 377,
-          "y2": 479
+          "x1": 0,
+          "y1": 93,
+          "x2": 108,
+          "y2": 476
         },
         "center": {
-          "x": 189,
-          "y": 288
+          "x": 54,
+          "y": 284
         }
       }
     ],
-    "voice_text": "persona a la izquierda, cerca."
+    "voice_text": "persona a la izquierda, a distancia."
   },
   "sensors": {
     "status": "active",
     "left": {
-      "distance_mm": 511.5339505565166,
-      "distance_m": 0.512,
-      "status": "warning",
-      "confirmed": true
+      "distance_mm": null,
+      "distance_m": null,
+      "status": "no_data",
+      "confirmed": false
     },
     "right": {
-      "distance_mm": 509.8068880467399,
-      "distance_m": 0.51,
-      "status": "warning",
-      "confirmed": true
+      "distance_mm": null,
+      "distance_m": null,
+      "status": "no_data",
+      "confirmed": false
     }
   },
   "haptic": {
     "status": "active",
-    "left": 91,
-    "center": 50,
+    "left": 79,
+    "center": 27,
     "right": 0
   },
   "battery": {
     "available": true,
     "mode": "demo_timer",
     "percent": 100,
-    "remaining_seconds": 17958,
+    "remaining_seconds": 17945,
     "remaining_text": "4 h 59 min",
     "voltage": null,
     "current": null,
@@ -107,6 +107,13 @@
     "status": "unavailable"
   },
   "activity": [
+    {
+      "type": "detection",
+      "timestamp": 1788884119.1334057,
+      "title": "Persona detectado",
+      "detail": "a la izquierda",
+      "confidence": 0.5764382481575012
+    },
     {
       "type": "detection",
       "timestamp": 1788884106.7971585,
