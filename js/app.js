@@ -286,9 +286,7 @@ function renderConnection(
    HEADER / ESTADO
    ============================================================ */
 
-function decorateConnectionCard(
-    state
-) {
+function decorateConnectionCard(state) {
 
     const element =
         $('sys-status');
@@ -300,18 +298,22 @@ function decorateConnectionCard(
     }
 
 
+    /*
+     * El .dot es hermano directo de #sys-status.
+     */
     const indicator =
-        element
-            .previousElementSibling;
+        element.parentElement;
 
 
     const dot =
-        indicator?.querySelector(
-            '.dot'
-        );
+        indicator?.querySelector('.dot');
 
 
     if (!dot) {
+
+        console.warn(
+            '[GUARDIAN] No se encontró el indicador .dot'
+        );
 
         return;
     }
@@ -330,24 +332,31 @@ function decorateConnectionCard(
         status === 'online'
     ) {
 
-        dot.style.background =
+        dot.style.backgroundColor =
             '#22c55e';
+
+        dot.style.boxShadow =
+            '0 0 0 4px rgba(34, 197, 94, 0.15)';
 
     } else if (
         status === 'syncing'
     ) {
 
-        dot.style.background =
+        dot.style.backgroundColor =
             '#f59e0b';
+
+        dot.style.boxShadow =
+            '0 0 0 4px rgba(245, 158, 11, 0.15)';
 
     } else {
 
-        dot.style.background =
+        dot.style.backgroundColor =
             '#ef4444';
+
+        dot.style.boxShadow =
+            '0 0 0 4px rgba(239, 68, 68, 0.15)';
     }
 }
-
-
 /* ============================================================
    MÉTRICAS
    ============================================================ */

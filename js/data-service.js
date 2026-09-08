@@ -24,9 +24,9 @@ const CONFIG = {
 
     /*
      * Durante pruebas:
-     * consultar cada 5 segundos.
+     * consultar cada 30 segundos.
      */
-    pollMs: 5000
+    pollMs: 30000
 };
 
 
