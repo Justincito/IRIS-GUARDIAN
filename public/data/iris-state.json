@@ -1,94 +1,58 @@
 {
   "schema_version": 1,
-  "generated_at": 1788885175.865928,
+  "generated_at": 1788885185.465875,
   "device": {
     "id": "IRIS-HORIZON-001",
     "name": "IRIS Horizon 001",
     "status": "online",
     "ip": "192.168.88.232",
-    "last_update": 1788885175.865928
+    "last_update": 1788885185.465875
   },
   "communication": {
     "status": "stable"
   },
   "camera": {
     "status": "active",
-    "fps": 10.357815442508976
+    "fps": 10.82677165350857
   },
   "ai": {
     "status": "active",
-    "timestamp": 1788885175.8159235,
+    "timestamp": 1788885185.3668685,
     "frame": {
       "width": 640,
       "height": 480
     },
-    "detection_count": 1,
-    "primary": {
-      "label": "person",
-      "display_label": "persona",
-      "confidence": 0.8129827976226807,
-      "zone": "center",
-      "score": 0.9402413988113403,
-      "substate": null,
-      "box": {
-        "x1": 186,
-        "y1": 68,
-        "x2": 514,
-        "y2": 479
-      },
-      "center": {
-        "x": 350,
-        "y": 273
-      }
-    },
-    "detections": [
-      {
-        "label": "person",
-        "display_label": "persona",
-        "confidence": 0.8129827976226807,
-        "zone": "center",
-        "score": 0.9402413988113403,
-        "substate": null,
-        "box": {
-          "x1": 186,
-          "y1": 68,
-          "x2": 514,
-          "y2": 479
-        },
-        "center": {
-          "x": 350,
-          "y": 273
-        }
-      }
-    ],
-    "voice_text": "persona al frente, cerca."
+    "detection_count": 0,
+    "primary": null,
+    "detections": [],
+    "voice_text": "No se detectan obstáculos relevantes."
   },
   "sensors": {
     "status": "active",
     "left": {
-      "distance_mm": 609.375,
-      "distance_m": 0.609,
-      "status": "clear",
-      "confirmed": true
+      "distance_mm": null,
+      "distance_m": null,
+      "status": "no_data",
+      "confirmed": false
     },
     "right": {
-      "distance_mm": 396.7162008669257,
-      "distance_m": 0.397,
-      "status": "warning",
-      "confirmed": true
+      "distance_mm": null,
+      "distance_m": null,
+      "status": "no_data",
+      "confirmed": false
     }
   },
   "haptic": {
-    "status": "active",
-    "left": 18,
-    "center": 93,
-    "right": 18
+    "status": "idle",
+    "left": 0,
+    "center": 0,
+    "right": 0
   },
   "battery": {
     "available": true,
     "mode": "demo_timer",
     "percent": 100,
-    "remaining_seconds": 17970,
+    "remaining_seconds": 17961,
     "remaining_text": "4 h 59 min",
     "voltage": null,
     "current": null,
