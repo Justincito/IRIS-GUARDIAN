@@ -1,23 +1,23 @@
 {
   "schema_version": 1,
-  "generated_at": 1788884593.3731139,
+  "generated_at": 1788884604.4031792,
   "device": {
     "id": "IRIS-HORIZON-001",
     "name": "IRIS Horizon 001",
     "status": "online",
     "ip": "192.168.88.232",
-    "last_update": 1788884593.3731139
+    "last_update": 1788884604.4031792
   },
   "communication": {
     "status": "stable"
   },
   "camera": {
     "status": "active",
-    "fps": 10.968921389277652
+    "fps": 7.64087870111349
   },
   "ai": {
     "status": "active",
-    "timestamp": 1788884593.3466084,
+    "timestamp": 1788884604.3721757,
     "frame": {
       "width": 640,
       "height": 480
@@ -30,8 +30,8 @@
   "sensors": {
     "status": "active",
     "left": {
-      "distance_mm": 174.1793038123177,
-      "distance_m": 0.174,
+      "distance_mm": 201.64217865510042,
+      "distance_m": 0.202,
       "status": "danger",
       "confirmed": true
     },
@@ -52,7 +52,7 @@
     "available": true,
     "mode": "demo_timer",
     "percent": 100,
-    "remaining_seconds": 17990,
+    "remaining_seconds": 17979,
     "remaining_text": "4 h 59 min",
     "voltage": null,
     "current": null,
@@ -73,6 +73,13 @@
   "activity": [
     {
       "type": "proximity",
+      "timestamp": 1788884604.4031792,
+      "title": "Obstáculo muy cercano",
+      "detail": "a la izquierda",
+      "distance_mm": 201.64217865510042
+    },
+    {
+      "type": "proximity",
       "timestamp": 1788884593.3731139,
       "title": "Obstáculo muy cercano",
       "detail": "a la izquierda",
@@ -91,7 +98,7 @@
       "type": "proximity",
       "severity": "critical",
       "title": "Obstáculo muy cercano",
-      "message": "Obstáculo a la izquierda a 174 mm."
+      "message": "Obstáculo a la izquierda a 202 mm."
     }
   ]
 }
